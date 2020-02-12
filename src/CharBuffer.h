@@ -111,6 +111,11 @@ class CharBuffer
     // @throws RangeException
     virtual bool ends_with(const char* text) const noexcept;
 
+    virtual size_t index_of(char letter) const noexcept;
+
+    // @throws RangeException
+    virtual size_t index_of(char letter, size_t start) const;
+
     virtual size_t index_of(const CharBuffer& other) const noexcept;
 
     // @throws RangeException

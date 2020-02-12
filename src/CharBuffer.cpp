@@ -712,6 +712,37 @@ bool CharBuffer::ends_with(const char* const text) const noexcept
     return result;
 }
 
+size_t CharBuffer::index_of(const char letter) const noexcept
+{
+    size_t index = 0;
+    while (index < bfr_length && buffer[index] != letter)
+    {
+        ++index;
+    }
+
+    return index < bfr_length ? index : NPOS;
+}
+
+// @throws RangeException
+size_t CharBuffer::index_of(const char letter, const size_t start) const
+{
+    size_t index = NPOS;
+    if (start <= bfr_length)
+    {
+        index = start;
+        while (index < bfr_length && buffer[index] != letter)
+        {
+            ++index;
+        }
+    }
+    else
+    {
+        throw RangeException();
+    }
+
+    return index < bfr_length ? index : NPOS;
+}
+
 size_t CharBuffer::index_of(const CharBuffer& other) const noexcept
 {
     size_t index = NPOS;
