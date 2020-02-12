@@ -23,6 +23,18 @@ class CharBuffer
     // @throws RangeException
     virtual CharBuffer& operator=(const char* text);
 
+    virtual bool operator==(const CharBuffer& other) const noexcept;
+    virtual bool operator==(const char* text) const noexcept;
+
+    virtual bool operator<(const CharBuffer& other) const noexcept;
+    virtual bool operator>(const CharBuffer& other) const noexcept;
+    virtual bool operator<=(const CharBuffer& other) const noexcept;
+    virtual bool operator>=(const CharBuffer& other) const noexcept;
+    virtual bool operator<(const char* const text) const noexcept;
+    virtual bool operator>(const char* const text) const noexcept;
+    virtual bool operator<=(const char* const text) const noexcept;
+    virtual bool operator>=(const char* const text) const noexcept;
+
     // @throws RangeException
     virtual void operator+=(const CharBuffer& other);
 

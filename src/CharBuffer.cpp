@@ -32,6 +32,12 @@ inline static int compare_buffer(
     size_t compare_length
 );
 
+inline static bool match_buffer(
+    const char* buffer,
+    const char* other_buffer,
+    size_t match_length
+);
+
 inline static size_t index_of_impl(
     const char* buffer,
     size_t length,
@@ -182,6 +188,67 @@ CharBuffer& CharBuffer::operator=(const char* const text)
         throw RangeException();
     }
     return *this;
+}
+
+bool CharBuffer::operator==(const CharBuffer& other) const noexcept
+{
+    bool equal_flag = false;
+    if (bfr_length == other.bfr_length)
+    {
+        equal_flag = match_buffer(buffer, other.buffer, bfr_length);
+    }
+    return equal_flag;
+}
+
+bool CharBuffer::operator==(const char* const text) const noexcept
+{
+    bool equal_flag = false;
+    const size_t text_length = safe_c_str_length(text);
+    if (bfr_length == text_length)
+    {
+        equal_flag = match_buffer(buffer, text, bfr_length);
+    }
+    return equal_flag;
+}
+
+bool CharBuffer::operator<(const CharBuffer& other) const noexcept
+{
+    return compare_to(other) < 0;
+}
+
+bool CharBuffer::operator>(const CharBuffer& other) const noexcept
+{
+    return compare_to(other) > 0;
+}
+
+bool CharBuffer::operator<=(const CharBuffer& other) const noexcept
+{
+    return compare_to(other) <= 0;
+}
+
+bool CharBuffer::operator>=(const CharBuffer& other) const noexcept
+{
+    return compare_to(other) >= 0;
+}
+
+bool CharBuffer::operator<(const char* const text) const noexcept
+{
+    return compare_to(text) < 0;
+}
+
+bool CharBuffer::operator>(const char* const text) const noexcept
+{
+    return compare_to(text) > 0;
+}
+
+bool CharBuffer::operator<=(const char* const text) const noexcept
+{
+    return compare_to(text) <= 0;
+}
+
+bool CharBuffer::operator>=(const char* const text) const noexcept
+{
+    return compare_to(text) >= 0;
 }
 
 // @throws RangeException
@@ -378,7 +445,6 @@ void CharBuffer::overwrite(
 )
 {
     size_t text_length = safe_c_str_length(text);
-    std::fprintf(stderr, "text_length = %zu\n", text_length);
     overwrite_impl(dst_start, text, text_length, src_start, src_end);
 }
 
@@ -389,7 +455,6 @@ void CharBuffer::overwrite(
 )
 {
     size_t text_length = safe_c_str_length(text);
-    std::fprintf(stderr, "text_length = %zu\n", text_length);
     overwrite_impl(dst_start, text, text_length, 0, text_length);
 }
 
@@ -708,6 +773,20 @@ inline static int compare_buffer(
         }
     }
     return result;
+}
+
+inline static bool match_buffer(
+    const char* const buffer,
+    const char* const other_buffer,
+    const size_t match_length
+)
+{
+    size_t idx = 0;
+    while (idx < match_length && buffer[idx] == other_buffer[idx])
+    {
+        ++idx;
+    }
+    return idx == match_length;
 }
 
 inline static size_t index_of_impl(
