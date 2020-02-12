@@ -75,7 +75,6 @@ CharBuffer::CharBuffer(const char* const text)
         buffer = buffer_mgr.get();
         copy_buffer(text, 0, text_length, buffer, 0);
         bfr_length = text_length;
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -102,7 +101,6 @@ CharBuffer::CharBuffer(const size_t buffer_capacity, const char* const text):
             throw RangeException();
         }
         bfr_length = text_length;
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -259,7 +257,6 @@ void CharBuffer::operator+=(const CharBuffer& other)
     {
         copy_buffer(other.buffer, 0, other.bfr_length, buffer, bfr_length);
         bfr_length += other.bfr_length;
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -276,7 +273,6 @@ void CharBuffer::operator+=(const char* const text)
     {
         copy_buffer(text, 0, text_length, buffer, bfr_length);
         bfr_length += text_length;
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -399,8 +395,8 @@ void CharBuffer::substring(const size_t start, const size_t end)
         else
         {
             bfr_length = end;
+            buffer[bfr_length] = '\0';
         }
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -419,7 +415,6 @@ void CharBuffer::substring(const CharBuffer& other, const size_t start, const si
         {
             copy_buffer(other.buffer, start, end, buffer, 0);
             bfr_length = substr_length;
-            buffer[bfr_length] = '\0';
         }
         else
         {
@@ -443,7 +438,6 @@ void CharBuffer::append(const CharBuffer& other, const size_t start, const size_
         {
             copy_buffer(other.buffer, start, end, buffer, bfr_length);
             bfr_length += substr_length;
-            buffer[bfr_length] = '\0';
         }
         else
         {
@@ -464,7 +458,6 @@ void CharBuffer::append_raw(const char* const data, const size_t data_length)
     {
         copy_buffer(data, 0, data_length, buffer, bfr_length);
         bfr_length += data_length;
-        buffer[bfr_length] = '\0';
     }
     else
     {
@@ -483,7 +476,6 @@ void CharBuffer::append_raw(const char* const data, const size_t start, const si
         {
             copy_buffer(data, start, end, buffer, bfr_length);
             bfr_length += substr_length;
-            buffer[bfr_length] = '\0';
         }
         else
         {
