@@ -67,6 +67,12 @@ class CharBuffer
     virtual void append(const CharBuffer& other, size_t start, size_t end);
 
     // @throws RangeException
+    virtual void append_raw(const char* data, size_t data_length);
+
+    // @throws RangeException
+    virtual void append_raw(const char* data, size_t start, size_t end);
+
+    // @throws RangeException
     virtual void overwrite(size_t dst_start, const CharBuffer& other);
 
     // @throws RangeException

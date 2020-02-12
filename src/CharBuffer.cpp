@@ -417,6 +417,46 @@ void CharBuffer::append(const CharBuffer& other, const size_t start, const size_
 }
 
 // @throws RangeException
+void CharBuffer::append_raw(const char* const data, const size_t data_length)
+{
+    const size_t remain = bfr_capacity - bfr_length;
+    if (data_length <= remain)
+    {
+        copy_buffer(data, 0, data_length, buffer, bfr_length);
+        bfr_length += data_length;
+        buffer[bfr_length] = '\0';
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+// @throws RangeException
+void CharBuffer::append_raw(const char* const data, const size_t start, const size_t end)
+{
+    const size_t remain = bfr_capacity - bfr_length;
+    if (start < end)
+    {
+        const size_t substr_length = end - start;
+        if (substr_length <= remain)
+        {
+            copy_buffer(data, start, end, buffer, bfr_length);
+            bfr_length += substr_length;
+            buffer[bfr_length] = '\0';
+        }
+        else
+        {
+            throw RangeException();
+        }
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+// @throws RangeException
 void CharBuffer::overwrite(
     const size_t dst_start,
     const CharBuffer& other
