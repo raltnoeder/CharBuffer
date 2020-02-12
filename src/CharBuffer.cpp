@@ -347,6 +347,42 @@ void CharBuffer::truncate(const size_t new_length) noexcept
 }
 
 // @throws RangeException
+void CharBuffer::copy_raw(const char* const data, const size_t length)
+{
+    if (length <= bfr_capacity)
+    {
+        copy_buffer(data, 0, length, buffer, 0);
+        bfr_length = length;
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+// @throws RangeException
+void CharBuffer::copy_raw(const char* const data, const size_t start, const size_t end)
+{
+    if (start <= end)
+    {
+        const size_t substr_length = end - start;
+        if (substr_length <= bfr_capacity)
+        {
+            copy_buffer(data, start, end, buffer, 0);
+            bfr_length = substr_length;
+        }
+        else
+        {
+            throw RangeException();
+        }
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+// @throws RangeException
 void CharBuffer::substring(const size_t start, const size_t end)
 {
     if (start <= end && end <= bfr_length)

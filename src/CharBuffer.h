@@ -58,6 +58,12 @@ class CharBuffer
     virtual void truncate(size_t new_length) noexcept;
 
     // @throws RangeException
+    virtual void copy_raw(const char* data, size_t length);
+
+    // @throws RangeException
+    virtual void copy_raw(const char* data, size_t start, size_t end);
+
+    // @throws RangeException
     virtual void substring(size_t start, size_t end);
 
     // @throws RangeException
