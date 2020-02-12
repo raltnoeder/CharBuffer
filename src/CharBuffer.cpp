@@ -954,6 +954,7 @@ inline static size_t index_of_impl(
                     if (pat_idx == pat_length)
                     {
                         index = src_idx;
+                        break;
                     }
                 }
             }
