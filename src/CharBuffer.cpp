@@ -408,7 +408,7 @@ void CharBuffer::substring(const size_t start, const size_t end)
 // @throws RangeException
 void CharBuffer::substring(const CharBuffer& other, const size_t start, const size_t end)
 {
-    if (start < end && end <= other.bfr_length)
+    if (start <= end && end <= other.bfr_length)
     {
         const size_t substr_length = end - start;
         if (substr_length <= bfr_capacity)
@@ -432,7 +432,7 @@ void CharBuffer::substring(const CharBuffer& other, const size_t start, const si
 void CharBuffer::append(const CharBuffer& other, const size_t start, const size_t end)
 {
     const size_t remain = bfr_capacity - bfr_length;
-    if (start < end && end <= other.bfr_length)
+    if (start <= end && end <= other.bfr_length)
     {
         const size_t substr_length = end - start;
         if (substr_length <= remain)
@@ -472,7 +472,7 @@ void CharBuffer::append_raw(const char* const data, const size_t data_length)
 void CharBuffer::append_raw(const char* const data, const size_t start, const size_t end)
 {
     const size_t remain = bfr_capacity - bfr_length;
-    if (start < end)
+    if (start <= end)
     {
         const size_t substr_length = end - start;
         if (substr_length <= remain)
