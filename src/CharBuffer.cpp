@@ -361,28 +361,6 @@ void CharBuffer::copy_raw(const char* const data, const size_t length)
 }
 
 // @throws RangeException
-void CharBuffer::copy_raw(const char* const data, const size_t start, const size_t end)
-{
-    if (start <= end)
-    {
-        const size_t substr_length = end - start;
-        if (substr_length <= bfr_capacity)
-        {
-            copy_buffer(data, start, end, buffer, 0);
-            bfr_length = substr_length;
-        }
-        else
-        {
-            throw RangeException();
-        }
-    }
-    else
-    {
-        throw RangeException();
-    }
-}
-
-// @throws RangeException
 void CharBuffer::substring(const size_t start, const size_t end)
 {
     if (start <= end && end <= bfr_length)
@@ -406,7 +384,7 @@ void CharBuffer::substring(const size_t start, const size_t end)
 }
 
 // @throws RangeException
-void CharBuffer::substring(const CharBuffer& other, const size_t start, const size_t end)
+void CharBuffer::substring_from(const CharBuffer& other, const size_t start, const size_t end)
 {
     if (start <= end && end <= other.bfr_length)
     {
@@ -414,6 +392,52 @@ void CharBuffer::substring(const CharBuffer& other, const size_t start, const si
         if (substr_length <= bfr_capacity)
         {
             copy_buffer(other.buffer, start, end, buffer, 0);
+            bfr_length = substr_length;
+        }
+        else
+        {
+            throw RangeException();
+        }
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+// @throws RangeException
+void CharBuffer::substring_from(const char* const text, const size_t start, const size_t end)
+{
+    const size_t text_length = safe_c_str_length(text);
+    if (start <= end && end <= text_length)
+    {
+        const size_t substr_length = end - start;
+        if (substr_length <= bfr_capacity)
+        {
+            copy_buffer(text, start, end, buffer, 0);
+            bfr_length = substr_length;
+        }
+        else
+        {
+            throw RangeException();
+        }
+    }
+    else
+    {
+        throw RangeException();
+    }
+}
+
+
+// @throws RangeException
+void CharBuffer::substring_raw_from(const char* const data, const size_t start, const size_t end)
+{
+    if (start <= end)
+    {
+        const size_t substr_length = end - start;
+        if (substr_length <= bfr_capacity)
+        {
+            copy_buffer(data, start, end, buffer, 0);
             bfr_length = substr_length;
         }
         else
@@ -489,7 +513,7 @@ void CharBuffer::append_raw(const char* const data, const size_t start, const si
 }
 
 // @throws RangeException
-void CharBuffer::overwrite(
+void CharBuffer::overwrite_with(
     const size_t dst_start,
     const CharBuffer& other
 )
@@ -498,7 +522,7 @@ void CharBuffer::overwrite(
 }
 
 // @throws RangeException
-void CharBuffer::overwrite(
+void CharBuffer::overwrite_with(
     const size_t dst_start,
     const CharBuffer& other,
     const size_t src_start,
@@ -509,7 +533,7 @@ void CharBuffer::overwrite(
 }
 
 // @throws RangeException
-void CharBuffer::overwrite(
+void CharBuffer::overwrite_with(
     const size_t dst_start,
     const char* const text,
     const size_t src_start,
@@ -521,7 +545,7 @@ void CharBuffer::overwrite(
 }
 
 // @throws RangeException
-void CharBuffer::overwrite(
+void CharBuffer::overwrite_with(
     const size_t dst_start,
     const char* const text
 )

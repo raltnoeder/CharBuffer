@@ -61,13 +61,16 @@ class CharBuffer
     virtual void copy_raw(const char* data, size_t length);
 
     // @throws RangeException
-    virtual void copy_raw(const char* data, size_t start, size_t end);
-
-    // @throws RangeException
     virtual void substring(size_t start, size_t end);
 
     // @throws RangeException
-    virtual void substring(const CharBuffer& other, size_t start, size_t end);
+    virtual void substring_from(const CharBuffer& other, size_t start, size_t end);
+
+    // @throws RangeException
+    virtual void substring_from(const char* data, size_t start, size_t end);
+
+    // @throws RangeException
+    virtual void substring_raw_from(const char* data, size_t start, size_t end);
 
     // @throws RangeException
     virtual void append(const CharBuffer& other, size_t start, size_t end);
@@ -79,16 +82,16 @@ class CharBuffer
     virtual void append_raw(const char* data, size_t start, size_t end);
 
     // @throws RangeException
-    virtual void overwrite(size_t dst_start, const CharBuffer& other);
+    virtual void overwrite_with(size_t dst_start, const CharBuffer& other);
 
     // @throws RangeException
-    virtual void overwrite(size_t dst_start, const CharBuffer& other, size_t src_start, size_t src_end);
+    virtual void overwrite_with(size_t dst_start, const CharBuffer& other, size_t src_start, size_t src_end);
 
     // @throws RangeException
-    virtual void overwrite(size_t dst_start, const char* text);
+    virtual void overwrite_with(size_t dst_start, const char* text);
 
     // @throws RangeException
-    virtual void overwrite(size_t dst_start, const char* text, size_t src_start, size_t src_end);
+    virtual void overwrite_with(size_t dst_start, const char* text, size_t src_start, size_t src_end);
 
     virtual void fill(const char fill_char) noexcept;
     virtual void fill(const char fill_char, size_t target_length);
