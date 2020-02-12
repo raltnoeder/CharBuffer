@@ -334,7 +334,11 @@ void CharBuffer::clear() noexcept
 
 void CharBuffer::wipe() noexcept
 {
-    std::memset(buffer, 0, bfr_capacity + 1);
+    volatile char* const wipe_buffer = buffer;
+    for (size_t idx = 0; idx <= bfr_capacity; ++idx)
+    {
+        wipe_buffer[idx] = 0;
+    }
 }
 
 void CharBuffer::truncate(const size_t new_length) noexcept
