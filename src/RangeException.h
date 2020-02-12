@@ -1,7 +1,9 @@
 #ifndef RANGEEXCEPTION_H
-#define	RANGEEXCEPTION_H
+#define RANGEEXCEPTION_H
 
-class RangeException
+#include <stdexcept>
+
+class RangeException : public std::exception
 {
   public:
     RangeException();
@@ -13,6 +15,6 @@ class RangeException
     RangeException& operator=(RangeException&& orig) = default;
   private:
 
-} ;
+};
 
 #endif	/* RANGEEXCEPTION_H */
