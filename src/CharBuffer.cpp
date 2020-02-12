@@ -726,9 +726,10 @@ size_t CharBuffer::index_of(const char* const text) const noexcept
 size_t CharBuffer::index_of(const CharBuffer& other, const size_t start) const
 {
     size_t index = NPOS;
-    if (start < bfr_length)
+    if (start <= bfr_length)
     {
-        if (bfr_length >= other.bfr_length)
+        const size_t remain = bfr_length - start;
+        if (remain >= other.bfr_length)
         {
             const size_t end_offset = bfr_length - other.bfr_length;
             if (start <= end_offset)
@@ -750,9 +751,10 @@ size_t CharBuffer::index_of(const char* const text, const size_t start) const
 {
     size_t index = NPOS;
     const size_t text_length = safe_c_str_length(text);
-    if (start < bfr_length)
+    if (start <= bfr_length)
     {
-        if (bfr_length >= text_length)
+        const size_t remain = bfr_length - start;
+        if (remain >= text_length)
         {
             size_t end_offset = bfr_length - text_length;
             if (start <= end_offset)
@@ -878,9 +880,9 @@ inline static size_t index_of_impl(
 
     if (length >= pat_length)
     {
-        // the first byte of a string with a length of zero is not valid
-        // the empty string always matches at position zero of the
-        // source string
+        // Cannot access the first byte of a zero-length string.
+        // The empty string always matches at the position where the
+        // search started
         if (pat_length > 0)
         {
             for (size_t src_idx = start_offset; src_idx <= end_offset; ++src_idx)
