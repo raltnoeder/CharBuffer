@@ -730,7 +730,7 @@ size_t CharBuffer::index_of(const CharBuffer& other, const size_t start) const
     {
         if (bfr_length >= other.bfr_length)
         {
-            const size_t end_offset = other.bfr_length - bfr_length;
+            const size_t end_offset = bfr_length - other.bfr_length;
             if (start <= end_offset)
             {
                 index = index_of_impl(buffer, bfr_length, other.buffer, other.bfr_length, start, end_offset);
@@ -754,7 +754,7 @@ size_t CharBuffer::index_of(const char* const text, const size_t start) const
     {
         if (bfr_length >= text_length)
         {
-            size_t end_offset = text_length - bfr_length;
+            size_t end_offset = bfr_length - text_length;
             if (start <= end_offset)
             {
                 index = index_of_impl(buffer, bfr_length, text, text_length, start, end_offset);
